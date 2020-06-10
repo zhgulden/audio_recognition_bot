@@ -1,4 +1,4 @@
-# @num_recognition_bot
+# telegram.me/num_recognition_bot
 
 ## Step1. Collect dataset
 
