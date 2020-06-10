@@ -1,6 +1,6 @@
 # @num_recognition_bot
 
-## Step1. Collect Dataset
+## Step1. Collect dataset
 
 To start collecting the dataset, run
 
