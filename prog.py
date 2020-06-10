@@ -1,8 +1,7 @@
-'''1223432479:AAExeQr0t_p7pAHc0L3wr4tgowVvzsZ-mUM'''
-import numpy as np # generate random
-import os          # get current directory path
-import subprocess  # execute ffmpeg
-import telebot     # run telegram bot
+import numpy as np 
+import os          
+import subprocess  
+import telebot     
 import pickle
 from datetime import datetime # generate log
 from scipy.io.wavfile import read
@@ -19,7 +18,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import librosa
 import os
-#from split_by_vad import sec2samples, get_segments_energy, get_vad_mask, mask_compress  
 
 class Segment:
     def __init__(self, start, stop):
@@ -53,14 +51,12 @@ def print_with_timeline(data, single_duration, units_name, row_limit):
         if (i + 1) % row_limit == 0 or i + 1 == len(data):
             print(f" | {single_duration * (i + 1):8.3f} {units_name}")
 
-
 def get_segment_energy(data, start, end):
     energy = 0
     for i in range(start, end):
         energy += float(data[i]) * data[i] / (end - start)
     energy = np.sqrt(energy) / 32768
     return energy
-
 
 def get_segments_energy(data, segment_duration):
     segments_energy  = []
@@ -70,28 +66,21 @@ def get_segments_energy(data, segment_duration):
         segments_energy.append(energy)
     return segments_energy
 
-
 def get_vad_mask(data, threshold):
     vad_mask = np.zeros_like(data)
     for i in range(0, len(data)):
         vad_mask[i] = data[i] > threshold
     return vad_mask
 
-
 def sec2samples(seconds, sample_rate):
   return int(seconds * sample_rate)
 
-
-
-# @audio_digits_dataset_bot
 bot = telebot.TeleBot("1223432479:AAExeQr0t_p7pAHc0L3wr4tgowVvzsZ-mUM")
 root = os.getcwd() + "/dataset/"
-
 
 def save_ogg(ogg_data, ogg_path):
     with open(ogg_path, "wb") as file:
         file.write(ogg_data)
-
 
 def convert_ogg_wav(ogg_path, dst_path):
     rate = 48000
@@ -104,8 +93,6 @@ def convert_ogg_wav(ogg_path, dst_path):
             p.kill()
             p.wait()
             return "timeout"
-
-
 
 def log(text):
     time_stamp = datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
@@ -181,8 +168,7 @@ def get_voice_messages(message):
     # ... todo
     wav_path_after_vad = vad(wav_path, user)
     answer = predict(wav_path_after_vad)
-    bot.send_message(user, "Спасибо" + str(answer))
-
+    bot.send_message(user, str(answer))
 
 if __name__ == "__main__":
     bot.polling(none_stop=True, interval=0)
